@@ -1,27 +1,45 @@
-# import libraries
-# from tkinter import * 
+# imports
 import tkinter as tk
 import os
+from turtle import width
 from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
+# path of py file declaration
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
+# window config
 win = tk.Tk()
+win.title("Mandela Catalogue Image Editor")
+win.iconbitmap("")
+
+# config of canvas
 betterWin1 = tk.Canvas(win, width=400, height=300)
 betterWin1.pack()
+
+# some things in window
+label1 = tk.Label(win, text="Type your name:")
+label1.config(font=("helvetica", 10))
+betterWin1.create_window(200, 120, window=label1)
 entry1 = tk.Entry (win)
 betterWin1.create_window(200, 140, window=entry1)
-entry2 = tk.Entry (win)
-betterWin1.create_window(200, 160, window=entry2)
+
+# function of image editing
 def ImageEditing ():
-    pathImg = entry1.get()
-    name = entry2.get()
+    name = entry1.get()
     img = Image.open(os.path.join(__location__, "edit_img.png"))
-    ManCatFont = ImageFont.truetype(os.path.join(__location__, "coolvetica rg.ttf"), 52)
-    ImageDraw.Draw(img).text((730, 565), "bad decision, " + name, font=ManCatFont)
+    ManCatFont = ImageFont.truetype(os.path.join(__location__, "coolvetica rg.ttf"), 55)
+    text = "bad decision, " + name
+    center = ImageDraw.Draw(img).textlength(text, font=ManCatFont)
+    ImageDraw.Draw(img).text(((1439-center)/2, 565), text, font=ManCatFont)
     img = img.save("final.png")
+    betterWin2 = tk.Toplevel(tk.Canvas(win, width=400, height=300))
+
+# button config
 buttonSubmit = tk.Button(text='Submit', command=ImageEditing)
-betterWin1.create_window(200, 180, window=buttonSubmit)
+betterWin1.create_window(200, 170, window=buttonSubmit)
+
+# looping window
 win.mainloop()
 
 '''
