@@ -2,6 +2,7 @@
 from pickle import TRUE
 import tkinter as tk
 import os
+import sys
 import pygame
 import time
 import threading
@@ -13,7 +14,11 @@ from PIL import ImageDraw
 from PIL import ImageTk
 
 # path of py file declaration
-__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+# determine if application is a script file or frozen exe
+if getattr(sys, 'frozen', False):
+    __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(sys.executable)))
+elif __file__:
+    __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 # window config
 win = tk.Tk()
