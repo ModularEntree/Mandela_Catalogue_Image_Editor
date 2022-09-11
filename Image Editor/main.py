@@ -1,8 +1,12 @@
 # imports
+from pickle import TRUE
 import tkinter as tk
 import os
 import pygame
-from turtle import width
+import time
+import threading
+from turtle import delay, width
+from tkinter.font import Font
 from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
@@ -15,6 +19,15 @@ win = tk.Tk()
 win.title("Mandela Catalogue Image Editor")
 win.iconbitmap(os.path.join(__location__, "Intruder.ico"))
 
+# font
+AnaHor = Font(
+    family="VCR OSD Mono",
+    size=40,
+    weight="bold",
+    overstrike=0,
+    underline=0
+)
+end = 0
 # config of canvas
 betterWin1 = tk.Canvas(win, width=400, height=300)
 betterWin1.pack()
@@ -36,7 +49,15 @@ def ImageEditing ():
     center = draw.textlength(text1, font=ManCatFont)
     draw.text((((1439-center)/2)+20, 565), text1, font=ManCatFont)
     img = img.save("final.png")
-
+def background():
+    i = 1
+    while i<100:
+        pygame.mixer.init()
+        pygame.mixer.Channel(1).play(pygame.mixer.Sound(os.path.join(__location__, "TheIntruderAlert.wav")))
+        time.sleep(5)
+        i+=1
+        if end==1:
+            break
 # scary function or something idk i just need to practice this shit
 def IntruderAlert ():
     win2 = tk.Toplevel(win)
@@ -49,12 +70,12 @@ def IntruderAlert ():
     bg_label = tk.Label(win2, image=imgbg)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
     win2.update()
+    label2 = tk.Label(win2, text="I am inside your home", font=AnaHor)
+    label2.pack(pady=20)
     pygame.mixer.init()
-    pygame.mixer.music.load(os.path.join(__location__, "Intruder.wav"))
-    pygame.mixer.music.play()
-    pygame.mixer.init()
-    pygame.mixer.music.load(os.path.join(__location__, "TheIntruderAlert.wav"))
-    pygame.mixer.music.play()
+    threading.Thread(name='background', target=background).daemon = True
+    threading.Thread(name='background', target=background).start()
+    pygame.mixer.Channel(0).play(pygame.mixer.Sound(os.path.join(__location__, "Intruder.wav")))
     win2.mainloop()
 
 # button config
@@ -63,6 +84,7 @@ betterWin1.create_window(200, 170, window=buttonSubmit)
 
 # looping window
 win.mainloop()
+end=1
 
 '''
     ManCatFont = Font(
