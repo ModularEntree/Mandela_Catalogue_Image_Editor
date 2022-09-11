@@ -1,18 +1,20 @@
 # import libraries
 # from tkinter import * 
-import tkinter as tkinter
+import tkinter as tk
 from PIL import Image
 from PIL import ImageDraw
 
-
+win = tk.Tk()
+betterWin1 = tk.Canvas(win, width=400, height=300)
+betterWin1.pack()
+entry1 = tk.Entry (win)
+betterWin1.create_window(200, 140, window=entry1)
+def getPath ():
+    path = entry1.get()
+    img = Image.open('')
+win.mainloop()
 
 '''
-okno = tkinter.Tk()
-def ahoj():  #funkce volaná po stisku tlačítka
-    print("Ahoj svete")
-button = tkinter.Button(okno, command=ahoj, text="Text tohoto tlačítka")  #tvorba tlačítka
-button.pack()  #zobrazení tlačítka
-okno.mainloop()  #spuštění vyhodnocovací smyčky
 
 # open image
 img = Image.open('/home/ubuntu/image.png')
