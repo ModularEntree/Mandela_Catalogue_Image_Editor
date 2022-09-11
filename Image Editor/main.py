@@ -11,7 +11,7 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 # window config
 win = tk.Tk()
 win.title("Mandela Catalogue Image Editor")
-win.iconbitmap("")
+win.iconbitmap(os.path.join(__location__, "intruder.ico"))
 
 # config of canvas
 betterWin1 = tk.Canvas(win, width=400, height=300)
@@ -29,9 +29,10 @@ def ImageEditing ():
     name = entry1.get()
     img = Image.open(os.path.join(__location__, "edit_img.png"))
     ManCatFont = ImageFont.truetype(os.path.join(__location__, "coolvetica rg.ttf"), 55)
-    text = "bad decision, " + name
-    center = ImageDraw.Draw(img).textlength(text, font=ManCatFont)
-    ImageDraw.Draw(img).text(((1439-center)/2, 565), text, font=ManCatFont)
+    text1 = "bad decision, " + name
+    draw = ImageDraw.Draw(img)
+    center = draw.textlength(text1, font=ManCatFont)
+    draw.text((((1439-center)/2)+20, 565), text1, font=ManCatFont)
     img = img.save("final.png")
     betterWin2 = tk.Toplevel(tk.Canvas(win, width=400, height=300))
 
